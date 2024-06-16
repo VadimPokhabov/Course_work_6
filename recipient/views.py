@@ -17,6 +17,12 @@ class RecipientCreateView(CreateView):
     fields = ['email', 'name', 'description']
     success_url = reverse_lazy('recipient:list')
 
+    def form_valid(self, form):
+        new_recipient = form.save()
+        new_recipient.owner = self.request.user
+        new_recipient.save()
+        return super().form_valid(form)
+
 
 class RecipientUpdateView(UpdateView):
     model = Recipient

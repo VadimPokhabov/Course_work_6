@@ -10,8 +10,13 @@
             <div class="row">
                 <div class="col-sm-4 offset-md-10 py-4">
                     <ul class="list-unstyled">
+                        <li><a href="{% url 'mailing:home' %}" class="text-white">Главная страница</a></li>
                         <li><a href="{% url 'recipient:list' %}" class="text-white">Список клиентов</a></li>
-                        <li><a href="{% url 'mailing:list' %}" class="text-white">Список рассылок</a></li>
+                        <li><a href="{% url 'mailing:message_list' %}" class="text-white">Список сообщений</a></li>
+                        <li><a href="{% url 'mailing:settings_list' %}" class="text-white">Список рассылок</a></li>
+                        {% if perms.blog.add_blog %}
+                        <li><a href="{% url 'blog:list' %}" class="text-white">Блог</a></li>
+                        {% endif %}
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'users:profile' %}" class="text-white">Личный кабинет</a></li>
                         <li><a href="{% url 'users:logout' %}" class="text-white">Выход</a></li>
@@ -19,9 +24,7 @@
                         <li><a href="{% url 'users:login' %}" class="text-white">Вход</a>/<a
                                 href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
                         {% endif %}
-                        {% if perms.blog.add_blog %}
-                        <a class="nav-item nav-link link-body-emphasis" href="{% url 'blog:create' %}">Добавить блог</a>
-                        {% endif %}
+
                     </ul>
                 </div>
             </div>

@@ -7,12 +7,17 @@ from recipient.models import Recipient
 
 class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request')
-        user = self.request.user
+    def __init__(self, *args, request=None, **kwargs):
+        # self.request = kwargs.pop('request')
+        # user = self.request.user
+        # super().__init__(*args, **kwargs)
+        # self.fields['recipients'].queryset = Recipient.objects.filter(owner=user)
+        # self.fields['message'].queryset = MailingMessage.objects.filter(owner=user)
         super().__init__(*args, **kwargs)
-        self.fields['recipients'].queryset = Recipient.objects.filter(owner=user)
-        self.fields['message'].queryset = MailingMessage.objects.filter(owner=user)
+        if request is not None:
+            self.fields['recipients'].queryset = Recipient.objects.filter(owner=request.user)
+            self.fields['message'].queryset = MailingMessage.objects.filter(owner=request.user)
+
 
     class Meta:
         model = MailingSettings
