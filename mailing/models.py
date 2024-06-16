@@ -1,8 +1,10 @@
 from django.db import models
 
 from recipient.models import Recipient
+from users.models import User
 
 NULLABLE = {'null': True, 'blank': True}
+
 FREQUENCY_CHOICES = [('daily', 'раз в день'), ('weekly', 'раз в неделю'), ('monthly', 'раз в месяц'), ]
 STATUS_OF_NEWSLETTER = [("Create", 'Создана'), ("Started", 'Отправлено'), ("Done", 'Завершена'), ]
 LOGS_STATUS_CHOICES = [('success', 'успешно'), ('fail', 'неуспешно'), ]
@@ -11,6 +13,7 @@ LOGS_STATUS_CHOICES = [('success', 'успешно'), ('fail', 'неуспешн
 class MailingMessage(models.Model):
     title = models.CharField(max_length=100, verbose_name='Заголовок')
     content = models.TextField(verbose_name='Контент')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name='Владелец')
 
     class Meta:
         verbose_name = 'Сообщение'
@@ -25,9 +28,10 @@ class MailingSettings(models.Model):
     end_time = models.DateTimeField(verbose_name='Конец рассылки', **NULLABLE)
     sending = models.CharField(max_length=50, choices=FREQUENCY_CHOICES, verbose_name='Период рассылки')
     message = models.ForeignKey(MailingMessage, on_delete=models.CASCADE, verbose_name='Сообщения')
-    setting_status = models.CharField(max_length=50, choices=STATUS_OF_NEWSLETTER, verbose_name='Статус рассылки',
-                                      default='Create')
+    setting_status = models.CharField(max_length=50, choices=STATUS_OF_NEWSLETTER,
+                                      verbose_name='Статус рассылки', default='Create')
     recipients = models.ManyToManyField(Recipient, verbose_name='Получатели')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name='Владелец')
 
     class Meta:
         verbose_name = 'Настройка рассылки'
