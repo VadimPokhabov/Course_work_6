@@ -18,7 +18,6 @@ class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
             self.fields['recipients'].queryset = Recipient.objects.filter(owner=request.user)
             self.fields['message'].queryset = MailingMessage.objects.filter(owner=request.user)
 
-
     class Meta:
         model = MailingSettings
         fields = ('sending', 'recipients', 'message', 'end_time',)
