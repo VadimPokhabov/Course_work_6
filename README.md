@@ -42,22 +42,26 @@ pip install -r requirements.txt
 ```
 6. Создать файл .env в корне проекта и заполнить следующие данные:
 ```
+#Django
 SECRET_KEY=
 
-DEBUG=
+#DB_Settings
+ENGINE=
+NAME=
+USER_DB=
+PASSWORD_DB=
 
-POSTGRES_DB=
-POSTGRES_PASSWORD=
-POSTGRES_USER=
-
+#message
+EMAIL_HOST=
+EMAIL_PORT=
 EMAIL_HOST_USER_MAIL=
 EMAIL_HOST_PASSWORD_MAIL=
+EMAIL_USE_TLS=
+EMAIL_USE_SSL=
 
-ADMIN_EMAIL=
-
+#Cache
 CACHE_ENABLED=
-CACHES_BACKEND=
-CACHES_LOCATION=
+CACHE_LOCATION=
 ```
 7. Для запуска рассылок сообщений клиентам необходимо использовать команду в терминале
 ```
