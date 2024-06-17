@@ -36,6 +36,9 @@ class MailingSettings(models.Model):
     class Meta:
         verbose_name = 'Настройка рассылки'
         verbose_name_plural = 'Настройки рассылки'
+        permissions = [
+            ('change_mailingsettings_setting_status', 'Can change mailingsettings setting_status')
+        ]
 
     def __str__(self):
         return f'{self.message} отправляется каждый {self.sending} с {self.first_datetime}'
